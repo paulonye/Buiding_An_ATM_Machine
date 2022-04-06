@@ -1,0 +1,130 @@
+def BATM():
+
+	class ATM:
+
+
+		balance = 50000
+
+		def __init__(self, name, pin):
+			self.name = name
+			self.pin = pin
+
+
+		def rem_balance(self):
+			return self.balance
+
+
+		def choice(self):
+			list_options = ['Withdraw','Check Balance',
+			'Transfer', 'End']
+			list_no1 = [1,2,3,4]
+			while True:
+				for i, v in list(zip(list_no1, list_options)):
+					print('{} - {}'.format(i,v))
+				self.choice = int(input('Select an option: '))
+				if self.choice == 1:
+					self.with_draw()
+
+				if self.choice == 2:
+					print(self.rem_balance())
+
+				if self.choice ==3:
+					self.transfer()
+				
+				if self.choice ==4:
+					print('Thank you for banking with us')
+					break
+
+
+
+		def run_loop(self):
+			self.choice()
+			print('Thank you {}'.format(self.name))
+
+
+
+
+
+		def with_draw(self):
+			print('Please input the amount of money you want to with_draw: ')
+			self.amount_tot = 0
+			self.count = 0
+			self.amount = int(input('> '))
+			print('\n')
+			self.wd_pin = int(input('Please input your pin\n> '))
+			if self.wd_pin != self.pin:
+				print('Incorrect pin!\nPlease try again')
+				pass
+			else:
+				if self.amount >= self.balance:
+					print('Insufficient Amount!')
+					pass
+				else:
+					self.amount_tot = self.amount_tot + self.amount
+					self.count = self.count + 1
+					print('Your transaction is being processed')
+					print('.....')
+					print('.....')
+					print('.....')
+					print('You have succesfully withdrawn {}'.format(self.amount))
+					self.balance = self.balance -self.amount
+
+
+		def transfer(self):
+			self.amt_send = int(input('How much do you want to send: '))
+			self.receiver_acc = int(input('Enter Account Number: '))
+			for i,v in list(zip([1,2,3], ['First Bank', 'Access Bank', 'UBA'])):
+				print('{}. {}'.format(i,v))
+			self.receiver_bank = int(input('> '))
+			print('Are you sure you want to send {} to {}'.format(self.amt_send, self.receiver_acc))
+			for i, v in list(zip([1,2], ['Yes', 'No'])):
+				print('{}. {}>'.format(i,v))
+			try:
+				self.tinp = int((input('> ')))
+			except:
+				print('Wrong Format!\nExpected Integer')
+				print('\n')
+				return
+			if self.tinp == 1:
+				try:
+					self.inp3 = int(input('Please enter your pin\n> '))
+				except:
+					print('Wrong format!')
+					print('\n')
+					return
+				if self.inp3 != self.pin:
+					print('Incorrect Pin!\nPlease try again')
+					pass
+				else:
+					if self.amt_send >= self.balance:
+						print('Insufficient Balance!')
+						pass
+					else:
+						print('{} has been sent to {}'.format(self.amt_send, self.receiver_acc))
+						self.balance = self.balance - self.amt_send
+			if self.tinp ==2:
+				return
+
+		def end(self):
+			print('Thank you for banking with us')
+
+
+	def name_collector():
+		try:
+			your_name = str(input('Please enter your first name> '))
+		except:
+			return
+		try:
+			your_pin = int(input('Please input your pin> '))
+		except:
+			print('Wrong format!\nExpected Integer')
+		return your_name, your_pin
+
+
+	name, pin = name_collector()
+	pr2 = ATM(name, pin)
+	#print(pr2)
+	print(pr2.run_loop())
+
+
+BATM()
